@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained('clients')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('client_id')->nullable()->constrained('clients')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId('responsible_employee_id')->constrained('employees')->nullOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->decimal('amount', 12, 2)->default(0);
