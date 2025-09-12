@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('company')->nullable();
+            $table->string('vat_number')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

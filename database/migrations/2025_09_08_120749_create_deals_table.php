@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->nullable()->constrained('clients')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('responsible_employee_id')->constrained('employees')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
+            $table->foreignId('responsible_employee_id')->nullable()->constrained('employees')->nullOnDelete();
             $table->string('title');
+            $table->foreignId('status_id')->nullable()->constrained('statuses')->restrictOnDelete();
             $table->decimal('amount', 12, 2)->default(0);
+            $table->date('expected_close_date')->nullable();
             $table->date('closed_at')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
