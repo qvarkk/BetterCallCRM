@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Employee;
+namespace App\Http\Requests\Product;
 
 use App\Http\Requests\BaseApiRequest;
 use Illuminate\Validation\Rule;
@@ -21,13 +21,14 @@ class UpdateRequest extends BaseApiRequest
     public function rules(): array
     {
         return [
-            'user_id' => [
-                'int',
-                'exists:users,id',
-                Rule::unique('employees')->ignore($this->user_id, 'user_id')
+            'name' => ['string', 'max:255'],
+            'sku' => [
+                'string',
+                'max:1024',
+                Rule::unique('products')->ignore($this->sku, 'sku')
             ],
-            'phone' => ['string', 'max:32'],
-            'position' => ['string', 'max:255'],
+            'price' => ['decimal:0,2', 'min:0', 'max:9999999999.99'],
+            'description' => ['string', 'max:2048'],
             'is_active' => ['boolean'],
         ];
     }
