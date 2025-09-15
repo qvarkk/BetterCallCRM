@@ -16,6 +16,7 @@ class DealResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'products' => ProductResource::collection($this->products),
             'client' => new ClientResource($this->client),
             'responsible' => new EmployeeResource($this->responsible),
             'title' => $this->title,
