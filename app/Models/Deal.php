@@ -28,4 +28,9 @@ class Deal extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
+    }
 }
