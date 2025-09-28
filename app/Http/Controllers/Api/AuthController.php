@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -36,6 +37,11 @@ class AuthController extends Controller
             ]
         ];
         return response()->json($response);
+    }
+
+    public function getUser(Request $request) : JsonResource
+    {
+        return new UserResource(auth()->user());
     }
 
     public function logout(Request $request) : JsonResponse
