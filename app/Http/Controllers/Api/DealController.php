@@ -18,7 +18,12 @@ class DealController extends Controller
      */
     public function index() : AnonymousResourceCollection
     {
-        return DealResource::collection(Deal::all());
+        $deals = Deal::all();
+
+        return DealResource::collection($deals)
+            ->additional([
+                'count' => $deals->count(),
+            ]);
     }
 
     /**

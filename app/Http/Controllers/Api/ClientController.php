@@ -18,7 +18,12 @@ class ClientController extends Controller
      */
     public function index() : AnonymousResourceCollection
     {
-        return ClientResource::collection(Client::all());
+        $clients = Client::all();
+
+        return ClientResource::collection($clients)
+            ->additional([
+                'count' => $clients->count(),
+            ]);
     }
 
     /**
