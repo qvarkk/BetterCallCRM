@@ -18,7 +18,12 @@ class ProductController extends Controller
      */
     public function index() : AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::all());
+        $perPage = request('per_page', 5);
+        $page = request('page', 1);
+
+        $products = Product::paginate($perPage, ['*'], 'page', $page);
+
+        return ProductResource::collection($products);
     }
 
     /**

@@ -18,12 +18,12 @@ class DealController extends Controller
      */
     public function index() : AnonymousResourceCollection
     {
-        $deals = Deal::all();
+        $perPage = request('per_page', 5);
+        $page = request('page', 1);
 
-        return DealResource::collection($deals)
-            ->additional([
-                'count' => $deals->count(),
-            ]);
+        $deals = Deal::paginate($perPage, ['*'], 'page', $page);
+
+        return DealResource::collection($deals);
     }
 
     /**
