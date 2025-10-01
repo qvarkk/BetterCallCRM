@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -32,6 +33,23 @@ class ProductController extends Controller
     public function store(StoreRequest $request) : JsonResponse
     {
         $data = $request->validated();
+
+        $imageFile = $request->file('image');
+        $imageFilename = rand(1, 10000) . '_' . $imageFile->getClientOriginalName();
+
+        try {
+            $path = Storage::disk('s3')->putFileAs('product_images', $imageFile, $imageFilename);
+            $imageUrl = Storage::disk('s3')->url($path);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+               'code' => 500,
+               'message' => 'Error uploading image',
+            ], 500);
+        }
+
+        unset($data['image']);
+        $data['image_url'] = $imageUrl;
         Product::create($data);
 
         return response()->json([

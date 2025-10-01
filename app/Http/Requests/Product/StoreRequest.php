@@ -24,6 +24,7 @@ class StoreRequest extends BaseApiRequest
             'name' => ['string', 'required', 'max:255'],
             'sku' => ['string', 'unique:products,sku', 'max:1024'],
             'price' => ['decimal:0,2', 'min:0', 'max:9999999999.99'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:10240'],
             'description' => ['string', 'max:2048'],
             'is_active' => ['boolean'],
         ];
